@@ -1,18 +1,26 @@
-// routes/api.js
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const validationMiddleware = require('../middlewares/restMiddleware');
 
 const router = express.Router();
-const dataPath = path.join(__dirname, '../_news_data.json');
+const dataPath = path.join(__dirname, '../data/processed/news_data.json');
 
 let data;
 try {
     data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 } catch (error) {
+    console.error('Error reading data file', error);
     data = { articles: [] };
 }
+
+const writeDataToFile = (data) => {
+    try {
+        fs.writeFileSync(dataPath, JSON.stringify(data), 'utf8');
+    } catch (error) {
+        console.error('Error writing to file', error);
+    }
+};
 
 router.get('/articles', (req, res) => {
     res.json(data.articles);
@@ -21,7 +29,7 @@ router.get('/articles', (req, res) => {
 router.post('/articles', validationMiddleware.validateArticle, (req, res) => {
     const newArticle = req.body;
     data.articles.push(newArticle);
-    fs.writeFileSync(dataPath, JSON.stringify(data));
+    writeDataToFile(data);
     res.status(201).json(newArticle);
 });
 
@@ -32,7 +40,7 @@ router.put('/articles/:id', validationMiddleware.validateArticle, (req, res) => 
     }
     const updatedArticle = req.body;
     data.articles[id] = updatedArticle;
-    fs.writeFileSync(dataPath, JSON.stringify(data));
+    writeDataToFile(data);
     res.json(updatedArticle);
 });
 
@@ -42,7 +50,7 @@ router.delete('/articles/:id', (req, res) => {
         return res.status(404).json({ error: 'Article not found' });
     }
     data.articles.splice(id, 1);
-    fs.writeFileSync(dataPath, JSON.stringify(data));
+    writeDataToFile(data);
     res.status(204).send();
 });
 
