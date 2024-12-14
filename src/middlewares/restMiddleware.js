@@ -1,4 +1,3 @@
-// middlewares/validationMiddleware.js
 module.exports.validateArticle = (req, res, next) => {
     const { title, content } = req.body;
     if (!title || !content) {

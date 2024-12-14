@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions name="NewsService"
+             targetNamespace="http://www.example.com/news"
+             xmlns:tns="http://www.example.com/news"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:web="http://www.example.com/news">
+    
+    <message name="getArticlesRequest"></message>
+    <message name="getArticlesResponse">
+        <part name="articles" type="xsd:string"/>
+    </message>
+
+    <message name="getArticleByIdRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="getArticleByIdResponse">
+        <part name="article" type="xsd:string"/>
+    </message>
+
+    <message name="addArticleRequest">
+        <part name="article" type="xsd:string"/>
+    </message>
+    <message name="addArticleResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <message name="updateArticleRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="article" type="xsd:string"/>
+    </message>
+    <message name="updateArticleResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <message name="deleteArticleRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="deleteArticleResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <portType name="NewsPortType">
+        <operation name="getArticles">
+            <input message="tns:getArticlesRequest"/>
+            <output message="tns:getArticlesResponse"/>
+        </operation>
+        <operation name="getArticleById">
+            <input message="tns:getArticleByIdRequest"/>
+            <output message="tns:getArticleByIdResponse"/>
+        </operation>
+        <operation name="addArticle">
+            <input message="tns:addArticleRequest"/>
+            <output message="tns:addArticleResponse"/>
+        </operation>
+        <operation name="updateArticle">
+            <input message="tns:updateArticleRequest"/>
+            <output message="tns:updateArticleResponse"/>
+        </operation>
+        <operation name="deleteArticle">
+            <input message="tns:deleteArticleRequest"/>
+            <output message="tns:deleteArticleResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="NewsBinding" type="tns:NewsPortType">
+        <soapenv:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getArticles">
+            <soapenv:operation soapAction="getArticles"/>
+            <input>
+                <soapenv:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soapenv:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <!-- Define the other operations similarly -->
+    </binding>
+
+    <service name="NewsService">
+        <port name="NewsPort" binding="tns:NewsBinding">
+            <soapenv:address location="http://localhost:3000/newsService"/>
+        </port>
+    </service>
+</definitions>

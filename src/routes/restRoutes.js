@@ -1,9 +1,12 @@
 const express = require('express');
+const router = express.Router();
+const restService = require('../services/rest/rest');
+//nous ne devons pas installer un module spécifique comme rest, 
+//car le framework Express lui-même suffit à exposer des services REST.
+//il suffit Express pour gérer les requêtes HTTP
 const fs = require('fs');
 const path = require('path');
 const validationMiddleware = require('../middlewares/restMiddleware');
-
-const router = express.Router();
 const dataPath = path.join(__dirname, '../data/processed/news_data.json');
 
 let data;
