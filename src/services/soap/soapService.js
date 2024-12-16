@@ -1,78 +1,160 @@
+const express = require('express');
 const soap = require('soap');
 const fs = require('fs');
 const path = require('path');
-const wsdl = path.join(__dirname, 'news_service.wsdl');
+const validationMiddleware = require('../../middlewares/soapMiddleware');
+const { console } = require('inspector');
+const dataPath = path.join(__dirname, '../data/processed/news_data.json');
 
-// Charger les données
-const dataPath = path.join(__dirname, '../_news_data.json');
+
 let data;
 try {
     data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 } catch (error) {
-    data = { status: "ok", totalResults: 0, articles: [] };
+    console.error('Error reading data file', error);
+    data = { articles: [] };  
 }
 
-// Définir les méthodes SOAP
+const writeDataToFile = (data) => {
+    try {
+        fs.writeFileSync(dataPath, JSON.stringify(data), 'utf8');
+    } catch (error) {
+        console.error('Error writing to file', error);
+    }
+};
+
 const service = {
     NewsService: {
         NewsPort: {
-            // Méthode pour récupérer tous les articles
-            getArticles: function (args, callback) {
-                callback({ articles: data.articles });
+          
+            getArticles: (args, callback) => {
+                callback(null, { articles: data.articles });
             },
 
-            // Méthode pour récupérer un article par ID
-            getArticleById: function (args, callback) {
-                const id = parseInt(args.id, 10);
-                if (isNaN(id) || id < 0 || id >= data.articles.length) {
-                    callback({ error: 'Article not found' });
-                } else {
-                    callback({ article: data.articles[id] });
+            getArticleById: (args, callback) => {
+                const id = args.id; 
+                const article = Object.values(data.articles).find(
+                    (article) => article.source?.id === id
+                );
+                if (!article) {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: `Article with ID '${id}' not found`
+                    });
                 }
-            },
+            
+                callback(null, { article });
+            },   
 
-            // Méthode pour ajouter un nouvel article
-            addArticle: function (args, callback) {
+    
+            addArticle: (args, callback) => {
                 const newArticle = args.article;
+                const validationError = validationMiddleware.validateArticleSOAP(newArticle);
+
+                if (validationError) {
+                    return callback({ faultCode: 'Client', faultString: validationError });
+                }
+                console.log(newArticle);
                 data.articles.push(newArticle);
-                data.totalResults = data.articles.length;
-                fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-                callback({ status: 'Article added', article: newArticle });
+                writeDataToFile(data);
+                console.log(data);
+                callback(null, { success: true, article: newArticle });
             },
 
-            // Méthode pour mettre à jour un article existant
-            updateArticle: function (args, callback) {
-                const id = parseInt(args.id, 10);
-                if (isNaN(id) || id < 0 || id >= data.articles.length) {
-                    callback({ error: 'Article not found' });
-                } else {
-                    data.articles[id] = args.article;
-                    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-                    callback({ status: 'Article updated', article: args.article });
+            updateArticle: (args, callback) => {
+                const requestInfo = args.ArticleRequest?.RequestInfo;
+                const articleData = args.ArticleRequest?.article;
+
+                if (!requestInfo || !requestInfo.id) {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: 'Missing or invalid article ID',
+                    });
+                }
+
+                if (!articleData || !articleData.title || !articleData.content) {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: 'Missing or invalid article data (title or content)',
+                    });
+                }
+
+                const id = requestInfo.id;
+
+                if (!data.articles[id]) {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: 'Article not found',
+                    });
+                }
+
+                try {
+                    data.articles[id] = {
+                        title: articleData.title,
+                        content: articleData.content,
+                    };
+
+                    writeDataToFile(data);
+
+                    callback(null, {
+                        status: 'Article updated',
+                        article: data.articles[id],
+                    });
+                } catch (err) {
+                    callback({
+                        faultCode: 'Server',
+                        faultString: `Server error: ${err.message}`,
+                    });
                 }
             },
 
-            // Méthode pour supprimer un article
-            deleteArticle: function (args, callback) {
-                const id = parseInt(args.id, 10);
+            deleteArticle: (args, callback) => {
+                const requestInfo = args.RequestInfo;
+                
+                if (!requestInfo || !requestInfo.id) {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: 'Missing or invalid article ID',
+                    });
+                }
+            
+                const id = parseInt(requestInfo.id, 10);
+            
                 if (isNaN(id) || id < 0 || id >= data.articles.length) {
-                    callback({ error: 'Article not found' });
-                } else {
+                    return callback({
+                        faultCode: 'Client',
+                        faultString: `Article with ID '${id}' not found`,
+                    });
+                }
+            
+                try {
                     data.articles.splice(id, 1);
-                    data.totalResults = data.articles.length;
-                    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-                    callback({ status: 'Article deleted' });
+                    writeDataToFile(data);
+            
+                    callback(null, { success: true });
+                } catch (err) {
+                    callback({
+                        faultCode: 'Server',
+                        faultString: `Server error: ${err.message}`,
+                    });
                 }
             }
+            
         }
     }
 };
 
-// Créer le serveur SOAP
-const createSoapServer = function () {
-    const server = soap.listen(app, '/newsService', service, wsdl, () => {
-        console.log('SOAP server started');
-    });
-};
 
-module.exports = createSoapServer;
+const wsdlPath = 'C:\\Users\\Arwa-PC\\Desktop\\Projects\\News_Project_Soc-WebServices\\src\\services\\soap\\news_service.wsdl';
+const wsdlContent = fs.readFileSync(wsdlPath, 'utf8');
+
+
+const app = express();
+const port = 3000;
+const server = app.listen(port, () => {
+    console.log(`SOAP server running on http://localhost:${port}`);
+});
+
+soap.listen(app, '/newsService', service, wsdlContent, () => {
+    console.log(`SOAP server is ready to handle requests.`);
+});

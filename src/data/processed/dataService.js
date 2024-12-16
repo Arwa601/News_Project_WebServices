@@ -2,14 +2,14 @@ const fs = require('fs');
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('897c2b6893254ec181d0c3fba3049a73');
 
-// Fetch articles from all fields
+
 newsapi.v2.topHeadlines({
-  language: 'en',  // Fetch articles in English
-  country: 'us'    // Fetch articles for the US (can be adjusted for other countries)
+  language: 'en',  
+  country: 'us'    
 }).then(response => {
   if (response.status === 'ok') {
-    // Save the response data to a JSON file
-    const filePath = './news_data.json'; // Specify the path to save the JSON file
+    
+    const filePath = './news_data.json'; 
 
     fs.writeFile(filePath, JSON.stringify(response, null, 2), (err) => {
       if (err) {

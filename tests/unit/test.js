@@ -1,4 +1,4 @@
-const { filterArticles } = require('../../src/data/processed/dataUtils');
+const { filterArticles } = require('../../src/data/processed/news_data.json');
 
 describe('Filtrage des articles', () => {
   test('filtre les articles avec les champs nécessaires', () => {

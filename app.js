@@ -1,9 +1,9 @@
 const express = require('express');
 const soap = require('soap');
 const path = require('path');
-const apiRoutes = require('../src/routes/restRoutes');
-const soapRoutes = require('../src/routes/soapRoutes');
-const graphqlRoutes = require('../src/routes/graphqlRoutes'); 
+const apiRoutes = require(path.resolve('./src/routes/restRoutes'));
+const soapRoutes = require(path.resolve('./src/routes/soapRoutes'));
+const graphqlRoutes = require(path.resolve('./src/routes/graphqlRoutes')); 
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +27,5 @@ app.listen(port, () => {
         SOAP: http://localhost:3000/api/soap?WSDL
         REST: http://localhost:3000/api/rest 
         `
-
     );
 });

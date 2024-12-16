@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const validationMiddleware = require('../middlewares/restMiddleware');
+const validationMiddleware = require(path.resolve('./src/middlewares/restMiddleware'));
 
 const router = express.Router();
 const dataPath = path.join(__dirname, '../_news_data.json');
