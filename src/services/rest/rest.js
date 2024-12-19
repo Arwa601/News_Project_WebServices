@@ -1,64 +1,48 @@
 const express = require('express');
-const fs = require('fs');
+const dotenv = require('dotenv');
 const path = require('path');
-const validationMiddleware = require(path.resolve('./src/middlewares/restMiddleware'));
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('../../config/swaggerConfig'); // Ici nous utilisons swaggerSpec
+const fs = require('fs').promises;
+const restMiddleware = require('../../middlewares/restMiddleware');
+const articlesRoute=require('../../routes/articles');
+const cors = require('cors'); 
+dotenv.config({ path: path.join(__dirname, 'config', '.env') });
 
-const router = express.Router();
-const dataPath = path.join(__dirname, '../_news_data.json');
+const app = express();
 
-let data;
-// Lecture des données du fichier JSON
-try {
-    data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-} catch (error) {
-    data = { status: "ok", totalResults: 0, articles: [] };
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); 
+
+app.use(cors()); 
+app.use(express.json());
+app.use('/api/articles', articlesRoute); 
+
+const DATA_FILE = path.join(__dirname, '..', '..', 'data', 'processed', 'news_data.json');
+async function verifyDataFile() {
+    try {
+        await fs.access(DATA_FILE);
+        const data = await fs.readFile(DATA_FILE, 'utf8');
+        console.log('Data file verified at:', DATA_FILE);
+        console.log('Initial data:', data.substring(0, 100) + '...');
+    } catch (error) {
+        console.error('Data file verification failed:', error.message);
+        console.log('Expected file path:', DATA_FILE);
+        process.exit(1); 
+    }
 }
 
-// Route pour récupérer tous les articles
-router.get('/articles', (req, res) => {
-    res.json(data);
-});
+async function startServer() {
+    await verifyDataFile();
+    
+    app.use('/api/articles', restMiddleware);
+    app.use(express.static(path.join(__dirname, '..', 'public')));
+    
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Data file location: ${DATA_FILE}`);
+        console.log('you find swagger documentation at http://localhost:3001/api-docs');
+    });
+}
 
-// Route pour récupérer un article par ID
-router.get('/articles/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id) || id < 0 || id >= data.articles.length) {
-        return res.status(404).json({ error: 'Article not found' });
-    }
-    res.json(data.articles[id]);
-});
-
-// Route pour ajouter un nouvel article
-router.post('/articles', validationMiddleware.validateArticle, (req, res) => {
-    const newArticle = req.body;
-    data.articles.push(newArticle);
-    data.totalResults = data.articles.length; // Mettre à jour le total
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2)); // Indentation pour un JSON lisible
-    res.status(201).json(newArticle);
-});
-
-// Route pour mettre à jour un article existant
-router.put('/articles/:id', validationMiddleware.validateArticle, (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id) || id < 0 || id >= data.articles.length) {
-        return res.status(404).json({ error: 'Article not found' });
-    }
-    const updatedArticle = req.body;
-    data.articles[id] = updatedArticle;
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-    res.json(updatedArticle);
-});
-
-// Route pour supprimer un article
-router.delete('/articles/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id) || id < 0 || id >= data.articles.length) {
-        return res.status(404).json({ error: 'Article not found' });
-    }
-    data.articles.splice(id, 1);
-    data.totalResults = data.articles.length; // Mettre à jour le total
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-    res.status(204).send();
-});
-
-module.exports = router;
+startServer().catch(console.error);

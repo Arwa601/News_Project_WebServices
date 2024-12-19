@@ -1,0 +1,192 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "News Articles API",
+      "version": "1.0.0",
+      "description": "A REST API for managing news articles."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3001/api/articles",
+        "description": "Local development server"
+      }
+    ],
+    "paths": {
+      "/articles": {
+        "get": {
+          "summary": "Get all articles",
+          "responses": {
+            "200": {
+              "description": "A list of articles",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Article"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new article",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewArticle"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Article created successfully"
+            },
+            "400": {
+              "description": "Missing required fields"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/articles/{id}": {
+        "get": {
+          "summary": "Get an article by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details of the requested article",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Article not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update an article",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewArticle"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Article updated successfully"
+            },
+            "404": {
+              "description": "Article not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete an article by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Article deleted successfully"
+            },
+            "404": {
+              "description": "Article not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Article": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "NewArticle": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["title", "content"]
+        }
+      }
+    }
+  }
+  

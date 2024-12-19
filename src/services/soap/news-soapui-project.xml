@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="38c37080-1d5e-4f0c-8a87-747b4c2c1851" activeEnvironment="Default" name="news" resourceRoot="" soapui-version="5.7.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:description>file:/C:/Users/Arwa-PC/Desktop/Projects/News_Project_Soc-WebServices/src/services/soap/news_service.wsdl</con:description><con:settings/><con:interface xsi:type="con:WsdlInterface" id="f823f185-69bc-4b0b-a52f-12acf40c1452" wsaVersion="NONE" name="NewsBinding" type="wsdl" bindingName="{http://example.com/newsService}NewsBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/Arwa-PC/Desktop/Projects/News_Project_Soc-WebServices/src/services/soap/news_service.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/Arwa-PC/Desktop/Projects/News_Project_Soc-WebServices/src/services/soap/news_service.wsdl"><con:part><con:url>file:/C:/Users/Arwa-PC/Desktop/Projects/News_Project_Soc-WebServices/src/services/soap/news_service.wsdl</con:url><con:content><![CDATA[<definitions targetNamespace="http://example.com/newsService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/newsService" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <types>
+    <xsd:schema targetNamespace="http://example.com/newsService">
+      <xsd:element name="Article" type="xsd:string"/>
+      <xsd:element name="ArticleRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RequestInfo" type="xsd:string"/>
+            <xsd:element name="article" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="getArticlesRequest"/>
+  <message name="getArticlesResponse">
+    <part name="articles" element="tns:Article"/>
+  </message>
+  <message name="addArticleRequest">
+    <part name="article" element="tns:Article"/>
+  </message>
+  <message name="addArticleResponse">
+    <part name="success" type="xsd:boolean"/>
+    <part name="article" element="tns:Article"/>
+  </message>
+  <message name="updateArticleRequest">
+    <part name="ArticleRequest" element="tns:ArticleRequest"/>
+  </message>
+  <message name="updateArticleResponse">
+    <part name="status" type="xsd:string"/>
+    <part name="article" element="tns:Article"/>
+  </message>
+  <message name="deleteArticleRequest">
+    <part name="RequestInfo" type="xsd:string"/>
+  </message>
+  <message name="deleteArticleResponse">
+    <part name="success" type="xsd:boolean"/>
+  </message>
+  <message name="getArticlesBySourceIdRequest">
+    <part name="sourceId" type="xsd:string"/>
+  </message>
+  <message name="getArticlesBySourceIdResponse">
+    <part name="articles" element="tns:Article"/>
+  </message>
+  <message name="getArticlesBySourceNameRequest">
+    <part name="sourceName" type="xsd:string"/>
+  </message>
+  <message name="getArticlesBySourceNameResponse">
+    <part name="articles" element="tns:Article"/>
+  </message>
+  <portType name="NewsPortType">
+    <operation name="getArticles">
+      <input message="tns:getArticlesRequest"/>
+      <output message="tns:getArticlesResponse"/>
+    </operation>
+    <operation name="addArticle">
+      <input message="tns:addArticleRequest"/>
+      <output message="tns:addArticleResponse"/>
+    </operation>
+    <operation name="updateArticle">
+      <input message="tns:updateArticleRequest"/>
+      <output message="tns:updateArticleResponse"/>
+    </operation>
+    <operation name="deleteArticle">
+      <input message="tns:deleteArticleRequest"/>
+      <output message="tns:deleteArticleResponse"/>
+    </operation>
+    <operation name="getArticlesBySourceId">
+      <input message="tns:getArticlesBySourceIdRequest"/>
+      <output message="tns:getArticlesBySourceIdResponse"/>
+    </operation>
+    <operation name="getArticlesBySourceName">
+      <input message="tns:getArticlesBySourceNameRequest"/>
+      <output message="tns:getArticlesBySourceNameResponse"/>
+    </operation>
+  </portType>
+  <binding name="NewsBinding" type="tns:NewsPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getArticles">
+      <soap:operation soapAction="http://example.com/newsService/getArticles"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="addArticle">
+      <soap:operation soapAction="http://example.com/newsService/addArticle"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="updateArticle">
+      <soap:operation soapAction="http://example.com/newsService/updateArticle"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="deleteArticle">
+      <soap:operation soapAction="http://example.com/newsService/deleteArticle"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getArticlesBySourceId">
+      <soap:operation soapAction="http://example.com/newsService/getArticlesBySourceId"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getArticlesBySourceName">
+      <soap:operation soapAction="http://example.com/newsService/getArticlesBySourceName"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="NewsService">
+    <port name="NewsPort" binding="tns:NewsBinding">
+      <soap:address location="http://localhost:3000/newsService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://DESKTOP-12893A1:8088/mockNewsBinding</con:endpoint><con:endpoint>http://localhost:3000/newsService</con:endpoint></con:endpoints><con:operation id="7fb4696d-b062-4c9f-afab-c77cdbbb00b9" isOneWay="false" action="http://example.com/newsService/addArticle" name="addArticle" bindingOperationName="addArticle" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="af74dbb9-f729-4fe9-874c-1aede0838fd5" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:addArticle>
+            <tns:status>Article added</tns:status>
+            <tns:article>
+                <tns:title>Accreditation</tns:title>
+                <tns:content>Enicarthage en force</tns:content>
+            </tns:article>
+        </tns:addArticle>
+    </soap:Body>
+</soap:Envelope>
+
+
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/addArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="639351ac-8bf9-4e1c-9d16-9cc8b7ce9cc2" name="Request 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:addArticle>
+            <tns:status>Article added</tns:status>
+            <tns:article>
+                <tns:title>SOAP Service</tns:title>
+                <tns:content>1 ére géneration du web services dont le Langage de définition des données est XML seulement</tns:content>
+            </tns:article>
+        </tns:addArticle>
+    </soap:Body>
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/addArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="9289fd87-eb6c-47bd-8e1b-f08b3c9f1b42" name="Request 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:addArticle>
+            <tns:status>Article added</tns:status>
+            <tns:article>
+                <tns:title>Soc</tns:title>
+                <tns:content>web service =app web + objets distribués</tns:content>
+            </tns:article>
+        </tns:addArticle>
+    </soap:Body>
+</soap:Envelope>
+
+
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/addArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="ed18ad1c-0b32-4da9-85b2-9ea9e2d49c3f" name="Request 4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:addArticleRequest>
+            <article>
+                <title>Nouvel article</title>
+                <content>Web service =App web + objets distribués</content>
+            </article>
+        </tns:addArticleRequest>
+    </soap:Body>
+</soap:Envelope>
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/addArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="11e88514-c058-4673-8de1-57f251d8b7a6" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:addArticle>\r
+         <new:Article>?</new:Article>\r
+      </new:addArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/addArticle"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6f63c60a-5f89-4e1a-adfa-9f1e869b40ac" isOneWay="false" action="http://example.com/newsService/deleteArticle" name="deleteArticle" bindingOperationName="deleteArticle" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8b31dce5-f9c1-4ed2-986c-3bb827cf54f2" name="Request 4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:deleteArticle>
+           <ArticleRequest>
+                <RequestInfo>
+                  <id>cnn</id>
+             </RequestInfo>
+             </ArticleRequest>
+        </tns:deleteArticle>      
+    </soap:Body>
+</soap:Envelope>
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/deleteArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="c8dc4737-0f8d-4186-b722-9270956e2670" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:deleteArticle>\r
+         <RequestInfo>?</RequestInfo>\r
+      </new:deleteArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/deleteArticle"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="54514547-2387-4fe7-a56f-c00ae09cea3a" isOneWay="false" action="http://example.com/newsService/getArticles" name="getArticles" bindingOperationName="getArticles" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="901e0525-c146-4c9e-b36d-a3a31d118f2d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tns:getArticlesRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/getArticles"/><con:wsrmConfig version="1.2"/></con:call><con:call id="fddabdc3-01e8-4613-8702-d5caf83c74fa" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticles/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticles"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9e4a61ea-ba75-4853-991a-e9009ad8e3df" isOneWay="false" action="http://example.com/newsService/updateArticle" name="updateArticle" bindingOperationName="updateArticle" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bdbcdc32-2ee6-4e3b-9330-be19df7a12b5" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="http://www.example.com/news">
+    <soap:Body>
+        <tns:updateArticle>
+            <ArticleRequest>
+                <RequestInfo>
+                    <id>axios</id> 
+                </RequestInfo>
+                <article>
+                    <title> Titre de l'Article</title> 
+                    <content>Nouveau contenu de l'article</content> 
+                </article>
+            </ArticleRequest>
+        </tns:updateArticle>
+    </soap:Body>
+</soap:Envelope>
+
+]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.com/news/updateArticle"/><con:wsrmConfig version="1.2"/></con:call><con:call id="00c460b6-77de-4d98-b0f5-a3c8a5d75f8d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:updateArticle>\r
+         <new:ArticleRequest>\r
+            <RequestInfo>?</RequestInfo>\r
+            <article>?</article>\r
+         </new:ArticleRequest>\r
+      </new:updateArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/updateArticle"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="fd11f4e9-2a8a-45a4-890d-be85485c2a26" isOneWay="false" action="http://example.com/newsService/getArticlesBySourceId" name="getArticlesBySourceId" bindingOperationName="getArticlesBySourceId" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c8ae65bc-752d-4fba-a67c-0d33eb3e6417" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticlesBySourceId>\r
+         <sourceId>cnn</sourceId>\r
+      </new:getArticlesBySourceId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticlesBySourceId"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b4998c39-2290-4961-8a9c-b2429c2e376c" isOneWay="false" action="http://example.com/newsService/getArticlesBySourceName" name="getArticlesBySourceName" bindingOperationName="getArticlesBySourceName" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8ea7669e-cc58-4604-a1aa-d1e03cd463b1" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticlesBySourceName>\r
+         <sourceName>CNN</sourceName>\r
+      </new:getArticlesBySourceName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticlesBySourceName"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="55e06cbb-7b63-41ac-9f79-6c602f3ef206" name="NewsBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="35ee6aca-ca0f-428c-b86f-9d80bf5dc21c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addArticle TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a8c99df6-035b-41b4-b233-77a7ec9d876f" name="addArticle"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>addArticle</con:operation><con:request name="addArticle" id="e7eb7a35-1460-407e-a1f4-8bf313075818"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:addArticle>\r
+         <new:Article>?</new:Article>\r
+      </new:addArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/addArticle"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="ccae3bf5-b6a5-4c39-96e1-2ad1d02a0519" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="deleteArticle TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4f8f6a0d-c17c-4c88-9759-f3a55a45e723" name="deleteArticle"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>deleteArticle</con:operation><con:request name="deleteArticle" id="cc12915c-7623-40d0-bc8d-e2d280b47014"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:deleteArticle>\r
+         <RequestInfo>?</RequestInfo>\r
+      </new:deleteArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/deleteArticle"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="7b1e1e05-9bf2-49b4-878e-80f992f244dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArticles TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="3a9b65e6-afc0-4412-8227-313ce5cf927e" name="getArticles"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>getArticles</con:operation><con:request name="getArticles" id="8f588da2-02c8-4dd1-a2b3-05371301446d"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticles/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/getArticles"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="5b44f0ab-1827-4b3e-a237-9872f550d1af" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updateArticle TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b5f9ff01-7498-426d-9754-c0f8869d839c" name="updateArticle"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>updateArticle</con:operation><con:request name="updateArticle" id="a283c314-4193-4cc1-83ce-81174043bb05"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:updateArticle>\r
+         <new:ArticleRequest>\r
+            <RequestInfo>?</RequestInfo>\r
+            <article>?</article>\r
+         </new:ArticleRequest>\r
+      </new:updateArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/updateArticle"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="28b1b3ed-0a57-4525-a470-2533add337f3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArticlesBySourceId TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1b38fb26-4634-4810-a595-2c18bee144fd" name="getArticlesBySourceId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>getArticlesBySourceId</con:operation><con:request name="getArticlesBySourceId" id="55731e2f-067a-4f1a-a3f7-825ac000d2eb"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticlesBySourceId>\r
+         <sourceId>?</sourceId>\r
+      </new:getArticlesBySourceId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/getArticlesBySourceId"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="e4285f56-2174-4839-a5ba-972915040125" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArticlesBySourceName TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="3cc64b1b-368e-40d4-b9f2-afb55f7d440b" name="getArticlesBySourceName"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>NewsBinding</con:interface><con:operation>getArticlesBySourceName</con:operation><con:request name="getArticlesBySourceName" id="85b246da-f2bb-44ec-be0c-53162d45c1ae"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:3000/newsService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <new:getArticlesBySourceName>\r
+         <sourceName>?</sourceName>\r
+      </new:getArticlesBySourceName>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://example.com/newsService/getArticlesBySourceName"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService id="84ff20f6-6bc1-4bc9-b137-64355b86ecf7" port="8088" path="/mockNewsBinding" host="DESKTOP-12893A1" name="NewsBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="addArticle" id="1823004d-4a6a-4c31-9ec5-cf4b226f9f6e" interface="NewsBinding" operation="addArticle"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="eef6630d-80e0-4d5e-a1fd-73731768549f" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:addArticleResponse>
+         <success>?</success>
+         <new:Article>?</new:Article>
+      </new:addArticleResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/addArticle"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="deleteArticle" id="80a157b8-d588-42b3-98a0-bbca8f2e3611" interface="NewsBinding" operation="deleteArticle"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="7c6a1723-06f2-469b-8442-acb4ff6601e3" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:deleteArticleResponse>
+         <success>?</success>
+      </new:deleteArticleResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/deleteArticle"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="getArticles" id="a000a7fe-f5d9-453b-a3ae-904bf1ae7264" interface="NewsBinding" operation="getArticles"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="274f930c-9898-403a-a20b-b63cbb36497e" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:getArticlesResponse>
+         <new:Article>?</new:Article>
+      </new:getArticlesResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticles"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="updateArticle" id="6fca1c50-747d-47cd-8954-427486793a12" interface="NewsBinding" operation="updateArticle"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="9f1ed9e9-61e1-4eb9-b0c2-68bea4ad5117" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:updateArticleResponse>
+         <status>?</status>
+         <new:Article>?</new:Article>
+      </new:updateArticleResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/updateArticle"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="getArticlesBySourceId" id="4c304e7a-0390-4120-8210-141ecd499db0" interface="NewsBinding" operation="getArticlesBySourceId"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="013c6174-be8f-421a-9f0f-41dd49aa1653" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:getArticlesBySourceIdResponse>
+         <new:Article>?</new:Article>
+      </new:getArticlesBySourceIdResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticlesBySourceId"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="getArticlesBySourceName" id="50c4ecd5-358e-49cf-8914-f83e44ce3f05" interface="NewsBinding" operation="getArticlesBySourceName"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="f11a58a6-966d-4498-ab38-ceb70cb097b4" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:new="http://example.com/newsService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <new:getArticlesBySourceNameResponse>
+         <new:Article>?</new:Article>
+      </new:getArticlesBySourceNameResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/newsService/getArticlesBySourceName"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

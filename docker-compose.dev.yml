@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  news-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./public:/usr/src/app/public
+      - /usr/src/app/node_modules
+    environment:
+      - PORT=3001
+    restart: unless-stopped

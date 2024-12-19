@@ -1,187 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions name="NewsService"
-             targetNamespace="http://www.example.com/news"
-             xmlns:tns="http://www.example.com/news"
-             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  
-  <!-- Types definition -->
-  <types>
-    <xsd:schema targetNamespace="http://www.example.com/news">
-      <xsd:element name="addArticleRequest">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="article" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      
-      <xsd:element name="addArticleResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="status" type="xsd:string"/>
-            <xsd:element name="article" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://example.com/newsService"
+             xmlns:tns="http://example.com/newsService"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-      <xsd:element name="getArticlesRequest"/>
+    <types>
+        <xsd:schema targetNamespace="http://example.com/newsService">
+            <xsd:element name="Article" type="xsd:string"/>
+            <xsd:element name="ArticleRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="RequestInfo" type="xsd:string"/>
+                        <xsd:element name="article" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
 
-      <xsd:element name="getArticlesResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="articles" type="xsd:string" maxOccurs="unbounded"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <message name="getArticlesRequest"/>
+    <message name="getArticlesResponse">
+        <part name="articles" element="tns:Article"/>
+    </message>
 
-      <xsd:element name="updateArticleRequest">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="id" type="xsd:string"/>
-            <xsd:element name="article" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <message name="addArticleRequest">
+        <part name="article" element="tns:Article"/>
+    </message>
+    <message name="addArticleResponse">
+        <part name="success" type="xsd:boolean"/>
+        <part name="article" element="tns:Article"/>
+    </message>
 
-      <xsd:element name="updateArticleResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="success" type="xsd:boolean"/>
-            <xsd:element name="article" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <message name="updateArticleRequest">
+        <part name="ArticleRequest" element="tns:ArticleRequest"/>
+    </message>
+    <message name="updateArticleResponse">
+        <part name="status" type="xsd:string"/>
+        <part name="article" element="tns:Article"/>
+    </message>
 
-      <xsd:element name="deleteArticleRequest">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="id" type="xsd:int"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <message name="deleteArticleRequest">
+        <part name="RequestInfo" type="xsd:string"/>
+    </message>
+    <message name="deleteArticleResponse">
+        <part name="success" type="xsd:boolean"/>
+    </message>
 
-      <xsd:element name="deleteArticleResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="success" type="xsd:boolean"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-       <xsd:element name="getArticleByIdRequest">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="id" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <message name="getArticlesBySourceIdRequest">
+        <part name="sourceId" type="xsd:string"/>
+    </message>
+    <message name="getArticlesBySourceIdResponse">
+        <part name="articles" element="tns:Article"/>
+    </message>
 
-      <xsd:element name="getArticleByIdResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="article" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-    </xsd:schema>
-  </types>
+    <message name="getArticlesBySourceNameRequest">
+        <part name="sourceName" type="xsd:string"/>
+    </message>
+    <message name="getArticlesBySourceNameResponse">
+        <part name="articles" element="tns:Article"/>
+    </message>
 
-  <!-- Message definitions -->
-  <message name="getArticlesRequest"/>
-  <message name="getArticlesResponse">
-    <part name="articles" element="tns:getArticlesResponse"/>
-  </message>
+    <portType name="NewsPortType">
+        <operation name="getArticles">
+            <input message="tns:getArticlesRequest"/>
+            <output message="tns:getArticlesResponse"/>
+        </operation>
+        <operation name="addArticle">
+            <input message="tns:addArticleRequest"/>
+            <output message="tns:addArticleResponse"/>
+        </operation>
+        <operation name="updateArticle">
+            <input message="tns:updateArticleRequest"/>
+            <output message="tns:updateArticleResponse"/>
+        </operation>
+        <operation name="deleteArticle">
+            <input message="tns:deleteArticleRequest"/>
+            <output message="tns:deleteArticleResponse"/>
+        </operation>
+        <operation name="getArticlesBySourceId">
+            <input message="tns:getArticlesBySourceIdRequest"/>
+            <output message="tns:getArticlesBySourceIdResponse"/>
+        </operation>
+        <operation name="getArticlesBySourceName">
+            <input message="tns:getArticlesBySourceNameRequest"/>
+            <output message="tns:getArticlesBySourceNameResponse"/>
+        </operation>
+    </portType>
 
-  <message name="addArticleRequest">
-    <part name="article" element="tns:addArticleRequest"/>
-  </message>
-  <message name="addArticleResponse">
-    <part name="status" element="tns:addArticleResponse"/>
-    <part name="article" element="tns:addArticleResponse"/>
-  </message>
+    <binding name="NewsBinding" type="tns:NewsPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getArticles">
+            <soap:operation soapAction="http://example.com/newsService/getArticles"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="addArticle">
+            <soap:operation soapAction="http://example.com/newsService/addArticle"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateArticle">
+            <soap:operation soapAction="http://example.com/newsService/updateArticle"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="deleteArticle">
+            <soap:operation soapAction="http://example.com/newsService/deleteArticle"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getArticlesBySourceId">
+            <soap:operation soapAction="http://example.com/newsService/getArticlesBySourceId"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getArticlesBySourceName">
+            <soap:operation soapAction="http://example.com/newsService/getArticlesBySourceName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
 
-  <message name="updateArticleRequest">
-    <part name="id" element="tns:updateArticleRequest"/>
-  </message>
-  <message name="updateArticleResponse">
-    <part name="success" element="tns:updateArticleResponse"/>
-    <part name="article" element="tns:updateArticleResponse"/>
-  </message>
-
-  <message name="deleteArticleRequest">
-    <part name="id" element="tns:deleteArticleRequest"/>
-  </message>
-  <message name="deleteArticleResponse">
-    <part name="success" element="tns:deleteArticleResponse"/>
-  </message>
-
-  <!-- Port Type -->
-  <portType name="NewsPortType">
-    <operation name="getArticles">
-      <input message="tns:getArticlesRequest"/>
-      <output message="tns:getArticlesResponse"/>
-    </operation>
-    <operation name="addArticle">
-      <input message="tns:addArticleRequest"/>
-      <output message="tns:addArticleResponse"/>
-    </operation>
-    <operation name="updateArticle">
-      <input message="tns:updateArticleRequest"/>
-      <output message="tns:updateArticleResponse"/>
-    </operation>
-    <operation name="deleteArticle">
-      <input message="tns:deleteArticleRequest"/>
-      <output message="tns:deleteArticleResponse"/>
-    </operation>
-  </portType>
-
-  <!-- Binding -->
-  <binding name="NewsBinding" type="tns:NewsPortType">
-    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="getArticles">
-      <soap:operation soapAction="http://www.example.com/news/getArticles"/>
-      <input>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </input>
-      <output>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </output>
-    </operation>
-    <operation name="addArticle">
-      <soap:operation soapAction="http://www.example.com/news/addArticle"/>
-      <input>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </input>
-      <output>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </output>
-    </operation>
-    <operation name="updateArticle">
-      <soap:operation soapAction="http://www.example.com/news/updateArticle"/>
-      <input>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </input>
-      <output>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </output>
-    </operation>
-    <operation name="deleteArticle">
-      <soap:operation soapAction="http://www.example.com/news/deleteArticle"/>
-      <input>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </input>
-      <output>
-        <soap:body use="encoded" namespace="http://www.example.com/news" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
-      </output>
-    </operation>
-  </binding>
-
-  <!-- Service -->
-  <service name="NewsService">
-    <port name="NewsPort" binding="tns:NewsBinding">
-      <soap:address location="http://localhost:3000/newsService"/>
-    </port>
-  </service>
+    <service name="NewsService">
+        <port name="NewsPort" binding="tns:NewsBinding">
+            <soap:address location="http://localhost:3000/newsService"/>
+        </port>
+    </service>
 
 </definitions>
